@@ -44,10 +44,12 @@ def get_data_and_label(raw_data):
 
 def load_physionet_mi(sub = 10, num_classes = 4, verbose = 1):
     """
-    input: raw_data: mne.io.read_raw_edf 的输出
+    input: sub-> subject id
+           num_classes->2 or 4
+           verbose->1 print, 0 no print
     return: data->[trials, sig_len, electrodes]
             label->[trials]
-    只返回完整的片段，不做任何处理(4.1s * 160hz) 
+    只返回完整的片段，不做任何处理(4.1s * 160hz)
     """
     data_path = "S%03d/S%03dR%02d.edf"   # 存放数据的具体位置，需要改成自己数据存放的地方
     MI_RUNS_1 = [4, 8, 12]
@@ -71,5 +73,6 @@ def load_physionet_mi(sub = 10, num_classes = 4, verbose = 1):
     return np.concatenate(data, axis=0), np.concatenate(label, axis=0)
 
 if __name__ == "__main__":
-    # TEST
-    pass
+    data, label = load_physionet_mi(sub=10, num_classes=4, verbose=0)
+    print(data.shape, label.shape)
+    # (90, 656, 65) (90,)
