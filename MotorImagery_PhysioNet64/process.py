@@ -73,6 +73,27 @@ def load_physionet_mi(sub = 10, num_classes = 4, verbose = 1):
     return np.concatenate(data, axis=0), np.concatenate(label, axis=0)
 
 if __name__ == "__main__":
-    data, label = load_physionet_mi(sub=10, num_classes=4, verbose=0)
+    data, label = load_physionet_mi(sub=10, num_classes=2, verbose=0)
     print(data.shape, label.shape)
     # (90, 656, 65) (90,)
+
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    mean = data.mean()
+    std = data.std()
+    print(mean.shape)
+    # data -= mean
+    # data /= std
+    plt.subplot(2,2,1)
+    plt.plot(data[0, :, 1:])
+    plt.title("标签%d"%(label[0]))
+    plt.subplot(2,2,2)
+    plt.plot(data[3, :, 1:])
+    plt.title("标签%d"%(label[3]))
+    plt.subplot(2,2,3)
+    plt.plot(data[4, :, 1:])
+    plt.title("标签%d"%(label[4]))
+    plt.subplot(2,2,4)
+    plt.plot(data[12, :, 1:])
+    plt.title("标签%d"%(label[12]))
+    plt.show()
